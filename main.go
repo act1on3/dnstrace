@@ -44,9 +44,10 @@ func init() {
 func main() {
 	color := flag.Bool("color", true, "Enable/disable colors")
 	nsonly := flag.Bool("nsonly", false, "Only print nameservers")
+	noglueonly := flag.Bool("noglueonly", false, "Only print no glue nameservers")
 	flag.Parse()
 
-	if flag.NArg() < 1 || flag.NArg() > 3 {
+	if flag.NArg() < 1 || flag.NArg() > 4 {
 		flag.Usage()
 		os.Exit(1)
 	}
@@ -161,8 +162,10 @@ func main() {
 					if !*nsonly {
 						fmt.Printf("%s %d NS %s (%s)\n", label, s.TTL, s.Name, glue)
 					} else {
-						if !s.HasGlue {
+						if !s.HasGlue && *noglueonly {
 							// just print ONLY NO GLUE nameserver hostname without any details
+							fmt.Printf("%s\n", s.Name)
+						} else if *nsonly && !*noglueonly {
 							fmt.Printf("%s\n", s.Name)
 						}
 					}
