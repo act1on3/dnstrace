@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/miekg/dns"
-	"github.com/rs/dnstrace/client"
+	"github.com/act1on3/dnstrace/client"
 )
 
 const (
